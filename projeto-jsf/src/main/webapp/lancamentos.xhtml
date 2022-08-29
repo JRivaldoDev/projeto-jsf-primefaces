@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+
+	<title>Lançamentos</title>
+
+
+</h:head>
+
+<h:body style="background-color: #DCDCDC;">
+	<ui:include src="/menu.xhtml"/>
+	<h:form id="formLancamentos" style="margin-left:40%">
+
+		<br />
+		<h:panelGrid columns="2">
+			<f:facet name="header">
+				<h:outputLabel value="Lançamentos" />
+			</f:facet>
+
+			<h:outputLabel value="ID:" />
+			<h:inputText value="#{lancamentoBean.lancamento.id}" />
+
+			<h:outputLabel value="Nota:" />
+			<h:inputText value="#{lancamentoBean.lancamento.numeroNotaFiscal}" />
+
+			<h:outputLabel value="Origem:" />
+			<h:inputText value="#{lancamentoBean.lancamento.empresaOrigem}" />
+
+			<h:outputLabel value="Destino:" />
+			<h:inputText value="#{lancamentoBean.lancamento.empresaDestino}" />
+			
+			<h:outputLabel/>
+			<h:panelGroup>
+				<h:panelGrid columns="4">
+					<h:commandButton action="#{lancamentoBean.novo}" image="/resources/img/novo-arquivo.png" title="Novo" />
+					<h:commandButton image="/resources/img/limpar.png" title="Limpar" type="reset" style="margin-left:0.2cm;"/>
+					<h:commandButton action="#{lancamentoBean.salvar}" image="/resources/img/salvar.png" title="Salvar" style="margin-left:0.2cm;"/>
+					<h:commandButton action="#{lancamentoBean.remover}" image="/resources/img/excluir-documento.png" title="Deletar" style="margin-left:0.2cm;"/>
+				</h:panelGrid>
+			</h:panelGroup>
+			
+		</h:panelGrid>
+		
+		<br />
+		<h:dataTable value="#{lancamentoBean.lancamentos}" var="l" border="1" cellpadding="3">
+		<f:facet name="header">Lista de Notas Lançadas</f:facet>
+			<h:column>
+			<f:facet name="header">ID</f:facet>
+				<h:outputText value="#{l.id}" />
+			</h:column>
+			<h:column>
+			<f:facet name="header">Nota</f:facet>
+				<h:outputText value="#{l.numeroNotaFiscal}" />
+			</h:column>
+			<h:column>
+			<f:facet name="header">Origem</f:facet>
+				<h:outputText value="#{l.empresaOrigem}" />
+			</h:column>
+			<h:column>
+			<f:facet name="header">Destino</f:facet>
+				<h:outputText value="#{l.empresaDestino}" />
+			</h:column>
+			
+			<h:column>
+			<f:facet name="header">Acão</f:facet>
+			<h:column>
+				<h:commandLink title="Editar">
+					<f:setPropertyActionListener value="#{l}" target="#{lancamentoBean.lancamento}" />
+					<h:graphicImage library="img" name="editar.png"/>
+				</h:commandLink>
+			</h:column>
+			<h:column>
+				<h:commandLink title="Excluir" action="#{lancamentoBean.remover}" >
+					<f:setPropertyActionListener value="#{l}" target="#{lancamentoBean.lancamento}"/>
+					<h:graphicImage library="img" name="excluir-documento.png" style="margin-left:0.2cm;"/>
+				</h:commandLink>
+			</h:column>
+			</h:column>
+
+		</h:dataTable>
+
+	</h:form>
+
+
+</h:body>
+
+</html>
