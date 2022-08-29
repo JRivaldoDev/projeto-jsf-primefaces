@@ -16,13 +16,24 @@
 	
 	<ui:include src="/menu.xhtml"/>
 	
-	<h:form id="formCadastro" style="margin-left:40%">
+	<h:form id="formCadastro" style="margin-left:40%" enctype="multipart/form-data">
 	
 		<h:messages infoStyle="color: green;"/>
 		<br />
 		
 		<h:panelGrid columns="2">
 			<f:facet name="header"><h:outputLabel value="Cadastro de Usuário" /> </f:facet>
+			
+			<h:outputLabel value="Foto:" />
+			<h:commandLink actionListener="#{pessoaBean.downloadFoto}">
+				<h:graphicImage value="#{pessoaBean.pessoa.fotoIconBase64}" id="foto" height="80" width="80"/>
+			</h:commandLink>
+			
+			<h:outputLabel/>
+			<h:inputFile value="#{pessoaBean.arquivoFoto}" id="arqFoto">
+				<f:ajax event="change" execute="@this" listener="#{pessoaBean.processarImagem}" render="foto"/>
+			</h:inputFile>
+			
 			<h:outputLabel value="ID:" />
 			<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
 	

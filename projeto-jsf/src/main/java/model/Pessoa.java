@@ -4,10 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -42,7 +46,14 @@ public class Pessoa implements Serializable{
 	
 	private Estados estados;
 	private Cidades cidades;
-		
+	
+	@Column(columnDefinition = "text")
+	private String fotoIconBase64;
+	private String extensao;
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	private byte[] fotoOriginalBase64;
+	
 	public Long getId() {
 		return id;
 	}
@@ -165,7 +176,24 @@ public class Pessoa implements Serializable{
 		this.cidades = cidades;
 	}
 	
-	
+	public String getFotoIconBase64() {
+		return fotoIconBase64;
+	}
+	public void setFotoIconBase64(String fotoIconBase64) {
+		this.fotoIconBase64 = fotoIconBase64;
+	}
+	public String getExtensao() {
+		return extensao;
+	}
+	public void setExtensao(String extensao) {
+		this.extensao = extensao;
+	}
+	public byte[] getFotoOriginalBase64() {
+		return fotoOriginalBase64;
+	}
+	public void setFotoOriginalBase64(byte[] fotoOriginalBase64) {
+		this.fotoOriginalBase64 = fotoOriginalBase64;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
