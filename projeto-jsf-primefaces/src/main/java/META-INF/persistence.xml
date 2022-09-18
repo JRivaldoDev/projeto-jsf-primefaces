@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	
+	<persistence-unit name="projeto-jsf-primefaces">
+		<class>model.Pessoa</class>
+		<class>model.Lancamento</class>
+		<class>model.Estados</class>
+		<class>model.Cidades</class>
+
+		<properties>
+			<!-- CONEXCÃO COM O BANCO DE DADOS -->
+			<property name="hibernate.connection.driver_class"
+				value="org.postgresql.Driver" />
+			<property name="hibernate.connection.url"
+				value="jdbc:postgresql://localhost:5432/projeto-jsf-primefaces" />
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.PostgreSQLDialect" />
+			<property name="hibernate.connection.username"
+				value="postgres" />
+			<property name="hibernate.connection.password" value="admin" />
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			
+			<!-- MINIMO DE CONEXÃO OU PORTA DISPONÍVEL -->
+			<property name="hibernate.c3p0.min_size" value="5"/>
+			<!-- MAXIMO DE CONEXÃO OU PORTA DISPONÍVEL -->
+			<property name="hibernate.c3p0.max_size" value="20"/>
+			<!-- NUMERO EM SEGUNDOS DE UMA CONEXÃO INATIVA -->
+			<property name="hibernate.c3p0.timeout" value="270"/>
+			<!-- QUANTIDADE DE TRANSAÇÕES MANTIDAS EM CACHE NO BANCO DE DADOS -->
+			<property name="hibernate.c3p0.max_statements" value="50"/>
+			<!-- TEMPO OCIOSO EM SEGUNDOS PARA VÁLIDAR UMA CONEXÃO -->
+			<property name="hibernate.c3p0.idle_test_period" value="120"/>
+			
+			
+		</properties>
+	</persistence-unit>
+</persistence>

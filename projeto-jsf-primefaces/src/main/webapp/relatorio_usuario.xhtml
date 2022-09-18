@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html  xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+
+	<title>Relatório de Usuários</title>
+	
+	<h:outputStylesheet name="css/estilo.css" position="last"/>
+	
+</h:head>
+
+<h:body >
+	<ui:include src="/menu.xhtml"/>
+	<b:messages />
+	<h:form id="relatorioUsuarios" style="margin-left:40%">
+	<b:panel style="width:40%">
+		<h:panelGrid columns="1">
+			<f:facet name="header">
+				<h:outputLabel value="Consultar Usuários Cadastrados" />
+			</f:facet>
+			
+			<b:column>
+			<h:outputLabel value="Nome:" />
+			<b:inputText value="#{relatorioUserBean.nome}" />
+			</b:column>
+			
+			<b:column>
+			<h:outputLabel value="Programador:"/>
+			<b:selectOneMenu value="#{relatorioUserBean.nivelProgramador}" >
+				<f:selectItem itemLabel="--[Selecione]--" noSelectionOption="true"/>
+				<f:selectItem itemValue="JUNIOR" itemLabel="Junior" />
+				<f:selectItem itemValue="PLENO" itemLabel="Pleno" />
+				<f:selectItem itemValue="SENIOR" itemLabel="Senior" />
+				<f:selectItem itemValue="ESPECIALISTA" itemLabel="Especialista" />
+			</b:selectOneMenu>
+			</b:column>
+			
+			<b:column>
+			<h:outputLabel value="Estado:"/>
+			<b:selectOneMenu value="#{relatorioUserBean.estado}" >
+				<f:selectItem itemLabel="--[Selecione]--" noSelectionOption="true"/>
+				<f:selectItems value="#{relatorioUserBean.estadosCidadesBean.estados}" />
+			</b:selectOneMenu>
+			</b:column>
+						
+			<b:column>
+			<h:outputLabel value="Data de Nascimento:" />
+			<b:dateTimePicker value="#{relatorioUserBean.dataNascimento}" format="DD/MM/YYYY" />
+			</b:column>
+			
+			<h:outputLabel/>
+			<b:commandButton value="Pesquisar" action="#{relatorioUserBean.buscar}" />
+			
+		</h:panelGrid>
+		</b:panel>
+	</h:form>
+	
+		<br />
+	
+	<h:form style="width:50%;margin-left:30%">
+		<b:panel>
+		<b:dataTable value="#{relatorioUserBean.pessoas}" var="p"  caption="Usuários Cadastrados" pdf="true" excel="true">
+			
+			<b:dataTableColumn value="#{p.id}"/>
+			<b:dataTableColumn value="#{p.nome}" label="Nome"/>
+			<b:dataTableColumn value="#{p.estados.nome}" label="Estado" />
+			<b:dataTableColumn value="#{p.nivelProgramador}" label="Programador" />
+			<b:dataTableColumn value="#{p.dataNascimento}" label="Data de Nascimento"/>
+			
+		</b:dataTable>
+		</b:panel>
+	</h:form>
+
+
+</h:body>
+
+</html>

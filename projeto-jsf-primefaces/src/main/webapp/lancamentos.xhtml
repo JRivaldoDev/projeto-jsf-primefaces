@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html  xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+
+	<title>Lançamentos</title>
+	
+	<h:outputStylesheet name="css/estilo.css" position="last"/>
+	
+
+</h:head>
+
+<h:body >
+	<ui:include src="/menu.xhtml"/>
+	<b:messages />
+	<h:form id="formLancamentos" style="margin-left:40%">
+	<b:panel style="width:40%">
+		<h:panelGrid columns="2">
+			<f:facet name="header">
+				<h:outputLabel value="Lançamentos" />
+			</f:facet>
+
+			<h:outputLabel value="ID:" />
+			<b:inputText value="#{lancamentoBean.lancamento.id}" readonly="true" />
+
+			<h:outputLabel value="Nota:" />
+			<b:inputText value="#{lancamentoBean.lancamento.numeroNotaFiscal}" required="true" requiredMessage="Informe o número da nota!"/>
+
+			<h:outputLabel value="Origem:" />
+			<b:inputText value="#{lancamentoBean.lancamento.empresaOrigem}" required="true" requiredMessage="Informe a origem!"/>
+
+			<h:outputLabel value="Destino:" />
+			<b:inputText value="#{lancamentoBean.lancamento.empresaDestino}" required="true" requiredMessage="Informe o destino!"/>
+			
+			<h:outputLabel value="Data:" />
+			<b:dateTimePicker value="#{lancamentoBean.lancamento.dataEnvio}" format="DD/MM/YYYY" required="true" requiredMessage="Informe a data da nota!"/>
+			
+			<h:outputLabel/>
+			<h:panelGroup>
+			<h:outputLabel/>
+				<h:panelGrid columns="4">
+					<h:commandButton action="#{lancamentoBean.novo}" image="/resources/img/novo-arquivo.png" title="Novo" />
+					<h:commandButton image="/resources/img/limpar.png" title="Limpar" type="reset" style="margin-left:0.2cm;"/>
+					<h:commandButton action="#{lancamentoBean.salvar}" image="/resources/img/salvar.png" title="Salvar" style="margin-left:0.2cm;"/>
+					<h:commandButton action="#{lancamentoBean.remover}" image="/resources/img/excluir-documento.png" title="Deletar" style="margin-left:0.2cm;"/>
+				</h:panelGrid>
+			</h:panelGroup>
+			
+		</h:panelGrid>
+		</b:panel>
+	</h:form>
+	
+		<br />
+	
+	<h:form style="width:50%;margin-left:30%">
+		<b:panel>
+		<b:dataTable value="#{lancamentoBean.lancamentos}" var="l"  caption="Lista de Notas Lançadas" >
+			<b:dataTableColumn value="#{l.id}"/>
+			<b:dataTableColumn value="#{l.numeroNotaFiscal}" label="Número" />
+			<b:dataTableColumn value="#{l.empresaOrigem}" label="Origem" />
+			<b:dataTableColumn value="#{l.empresaDestino}" label="Destino"/>
+			<b:dataTableColumn value="#{l.dataEnvio}" label="Data"/>
+			<b:dataTableColumn label="Ação" >
+				<h:commandLink title="Editar">
+						<f:setPropertyActionListener value="#{l}" target="#{lancamentoBean.lancamento}" />
+						<h:graphicImage library="img" name="editar.png" style="margin-left:0.9cm"/>
+					</h:commandLink>
+				<h:commandLink title="Excluir" action="#{lancamentoBean.remover}" >
+						<f:setPropertyActionListener value="#{l}" target="#{lancamentoBean.lancamento}"/>
+						<h:graphicImage library="img" name="excluir-documento.png" style="margin-left:0.9cm"/>
+					</h:commandLink>
+			</b:dataTableColumn>
+							
+			</b:dataTable>
+		</b:panel>
+	</h:form>
+
+
+</h:body>
+
+</html>
