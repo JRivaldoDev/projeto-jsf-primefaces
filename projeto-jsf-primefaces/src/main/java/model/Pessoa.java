@@ -46,6 +46,7 @@ public class Pessoa implements Serializable{
 	private String cidade;
 	private String uf;
 	private String cpf;
+	private Double salario;
 	
 	private Estados estados;
 	private Cidades cidades;
@@ -202,6 +203,12 @@ public class Pessoa implements Serializable{
 	}
 	public String getCpf() {
 		return cpf;
+	}
+	public void setSalario(Double salario) {
+		this.salario = salario;
+	}
+	public Double getSalario() {
+		return salario;
 	}
 	
 	@Override

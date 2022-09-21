@@ -125,31 +125,48 @@
 			
 			<h3>Dados Profissionais</h3>
 			
-			<b:panelGrid columns="3">
+			<b:panelGrid columns="4">
 			
-			<b:column>
+			<b:column style="padding-left: 15px;">
+			<b:panelGrid columns="1">
 			<h:outputLabel value="Frameworks:"/>
-				<h:selectManyCheckbox id="campoFrameworks" value="#{pessoaBean.pessoa.frameworks}" layout="pageDirection">
-					<f:selectItem itemValue="Spring MVC"/>
-					<f:selectItem itemValue="JPA"/>
-					<f:selectItem itemValue="Hibernate"/>
-					<f:selectItem itemValue="PrimeFaces"/>
-				</h:selectManyCheckbox>
+				<p:selectCheckboxMenu id="campoFrameworks" value="#{pessoaBean.pessoa.frameworks}" label="Frameworks" style="width: 18rem;">
+					<f:selectItem itemValue="Spring MVC" itemLabel="Spring MVC"/>
+					<f:selectItem itemValue="JPA" itemLabel="JPA"/>
+					<f:selectItem itemValue="Hibernate" itemLabel="Hibernate"/>
+					<f:selectItem itemValue=" PrimeFaces" itemLabel="PrimeFaces"/>
+				</p:selectCheckboxMenu>
+			</b:panelGrid>
 			</b:column>
-			<b:column>
+			
+			<b:column style="padding-left: 15px;">
+			<b:panelGrid columns="1">
 			<h:outputLabel value="Programador:"/>
-				<h:selectOneRadio id="campoProgramador" value="#{pessoaBean.pessoa.nivelProgramador}" layout="pageDirection"
+				<p:selectOneMenu id="campoProgramador" value="#{pessoaBean.pessoa.nivelProgramador}" style="width: 18rem;"
 				required="true" requiredMessage="Informe o nível de programador!">
+					<f:selectItem itemLabel="--[Selecione]--" noSelectionOption="true"/>
 					<f:selectItem itemValue="JUNIOR" itemLabel="Junior" />
 					<f:selectItem itemValue="PLENO" itemLabel="Pleno" />
 					<f:selectItem itemValue="SENIOR" itemLabel="Senior" />
 					<f:selectItem itemValue="ESPECIALISTA" itemLabel="Especialista" />
-				</h:selectOneRadio>
+				</p:selectOneMenu>
+			</b:panelGrid>
 			</b:column>
+			
 			<b:column>
-				<h:outputLabel value="Ativo:"/>
-				<b:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" id="ativo"/>
+				<h:outputLabel value="Salário:" />
+				<b:inputText value="#{pessoaBean.pessoa.salario}" id="salario" mask="numeric" >
+				</b:inputText>
 			</b:column>
+			
+			<b:column>
+			<b:panelGrid columns="1">
+				<h:outputLabel value="Ativo:"/>
+				<p:selectBooleanButton value="#{pessoaBean.pessoa.ativo}" id="ativo" 
+                                onIcon="pi pi-check" offIcon="pi pi-times" style="width:6rem"/>
+			</b:panelGrid>
+			</b:column>
+			
 			<b:column>
 				<h:outputLabel value="Estado:"/>
 				<b:selectOneMenu value="#{pessoaBean.pessoa.estados}" converter="estadosConverter" id="estados"

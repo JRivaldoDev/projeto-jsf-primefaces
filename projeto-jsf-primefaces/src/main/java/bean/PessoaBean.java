@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
@@ -25,6 +26,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
+
+import org.primefaces.model.charts.ChartData;
+import org.primefaces.model.charts.line.LineChartDataSet;
+import org.primefaces.model.charts.line.LineChartModel;
+import org.primefaces.model.charts.line.LineChartOptions;
+import org.primefaces.model.charts.optionconfig.title.Title;
 
 import com.google.gson.Gson;
 
@@ -41,6 +48,7 @@ public class PessoaBean {
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
 	private EstadosCidadesBean estadosCidadesBean = new EstadosCidadesBean();
 	private Part arquivoFoto;
+	private LineChartModel lineChartModel = new LineChartModel();
 
 	public Pessoa getPessoa() {
 		return pessoa;
@@ -69,13 +77,20 @@ public class PessoaBean {
 	public void setArquivoFoto(Part arquivoFoto) {
 		this.arquivoFoto = arquivoFoto;
 	}
+	
+	public LineChartModel getLineChartModel() {
+		return lineChartModel;
+	}
+	public void setLineChartModel(LineChartModel lineChartModel) {
+		this.lineChartModel = lineChartModel;
+	}
 
 	public String salvar() {
 		if(existeLogin(pessoa.getLogin())) {
-			mostrarMsg("Já existe um usuário com o login: " + pessoa.getLogin());
+			mostrarMsg(FacesMessage.SEVERITY_WARN, "Já existe um usuário com o login: " + pessoa.getLogin());
 		}else {
 			pessoa = daoPessoa.salvarMerge(pessoa);
-			mostrarMsg("Operação realizada com sucesso!!!");
+			mostrarMsg(FacesMessage.SEVERITY_INFO, "Operação realizada com sucesso!!!");
 			carregarPessoas();
 		}
 		
@@ -119,7 +134,7 @@ public class PessoaBean {
 	public String deletar() {
 		daoPessoa.deletar(pessoa);
 		pessoa = new Pessoa();
-		mostrarMsg("Cadastro deletado com sucesso!!!");
+		mostrarMsg(FacesMessage.SEVERITY_INFO, "Cadastro deletado com sucesso!!!");
 		limpar();
 		carregarPessoas();
 		return "";
@@ -150,14 +165,13 @@ public class PessoaBean {
 
 		}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage("msg", new FacesMessage("Usuário não encontrado!"));
+			FacesContext.getCurrentInstance().addMessage("msg", new FacesMessage(FacesMessage.SEVERITY_WARN,"","Usuário não encontrado!"));
 		}
 
 		return "index.jsf";
 	}
 
 	public String deslogar() {
-
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = context.getExternalContext();
 
@@ -208,14 +222,12 @@ public class PessoaBean {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			mostrarMsg("Erro ao pesquisar CEP!");
+			mostrarMsg(FacesMessage.SEVERITY_ERROR, "Erro ao pesquisar CEP!");
 		}
 	}
 
-	private void mostrarMsg(String msg) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		FacesMessage message = new FacesMessage(msg);
-		context.addMessage(null, message);
+	private void mostrarMsg(Severity tipo, String msg ) {
+		FacesContext.getCurrentInstance().addMessage("msg", new FacesMessage(tipo, "", msg));
 	}
 
 	public void editar() {
@@ -301,6 +313,81 @@ public class PessoaBean {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void gerarGraficoSalario() {
+		carregarPessoas();
+		
+		ChartData data = new ChartData();
+        LineChartDataSet dataSet = new LineChartDataSet();
+        
+        List<Object> values = new ArrayList<>();
+        List<String> labels = new ArrayList<>();
+		
+		Double salJunior = 0.0;
+		int qntJ = 0;
+		Double salPleno = 0.0;
+		int qntP = 0;
+		Double salSenior = 0.0;
+		int qntS = 0;
+		Double salEspecialista = 0.0;
+		int qntE = 0;
+
+		for (Pessoa pessoa : pessoas) {
+			
+			if(pessoa.getNivelProgramador().equalsIgnoreCase("JUNIOR")) {
+				salJunior += pessoa.getSalario();
+				qntJ++;
+			}
+			else if (pessoa.getNivelProgramador().equalsIgnoreCase("PLENO")) {
+				salPleno += pessoa.getSalario();
+				qntP++;
+			}
+			else if (pessoa.getNivelProgramador().equalsIgnoreCase("SENIOR")) {
+				salSenior += pessoa.getSalario();
+				qntS++;
+			}
+			else if (pessoa.getNivelProgramador().equalsIgnoreCase("ESPECIALISTA")) {
+				salEspecialista += pessoa.getSalario();
+				qntE++;
+			}
+						
+		}
+		
+		
+		if(qntJ > 0) {
+			labels.add("Junior");
+			values.add(salJunior / qntJ);
+		}
+		if(qntP > 0) {
+			labels.add("Pleno");
+			values.add(salPleno / qntP);
+		}
+		if(qntS > 0) {
+			labels.add("Senior");
+			values.add(salSenior / qntS);
+		}
+		if(qntE > 0) {
+			labels.add("Especialista");
+			values.add(salEspecialista / qntE);
+		}
+		
+		dataSet.setData(values);
+		dataSet.setLabel("Média");
+		dataSet.setFill(false);
+		dataSet.setBorderColor("rgb(75, 192, 192)");
+        dataSet.setTension(0.1);
+		data.addChartDataSet(dataSet);
+		data.setLabels(labels);
+		
+		LineChartOptions options = new LineChartOptions();
+		Title title = new Title();
+        title.setDisplay(true);
+        title.setText("Média de Salários");
+        options.setTitle(title);
+		
+		lineChartModel.setData(data);
+		lineChartModel.setOptions(options);
 	}
 
 }

@@ -11,8 +11,9 @@
 		
 		<p:menubar>
 		
-			<p:menuitem value="Cadastros" action="primeira_pagina" icon="pi pi-fw pi-user"/>
+			<p:menuitem value="Cadastros" action="primeira_pagina" icon="pi pi-fw pi-id-card"/>
 			<p:menuitem value="Lançamentos" action="lancamentos" icon="pi pi-fw pi-file"/>
+			<p:menuitem value="Gráficos" action="graficos" icon="pi pi-fw pi-chart-bar"/>
 			
 			<p:submenu label="Relatórios" icon="pi pi-fw pi-calendar">
 				<p:menuitem value="Relatório Usuário" action="relatorio_usuario" icon="pi pi-fw pi-users"/>
@@ -21,7 +22,7 @@
 			
 			<p:divider layout="vertical"/>
 			
-			<p:menuitem value="Logout" action="#{pessoaBean.deslogar}" icon="pi pi-fw pi-power-off"/>
+			<p:menuitem value="Logout" action="#{pessoaBean.deslogar}" ajax="false" icon="pi pi-fw pi-power-off"/>
 			
 		</p:menubar>
 		

@@ -22,7 +22,7 @@
 	<b:panel style="width:40%">
 		<h:panelGrid columns="1">
 			<f:facet name="header">
-				<h:outputLabel value="Consultar Notas Lançadas" />
+				<h4>Consultar Notas Lançadas</h4>
 			</f:facet>
 			
 			<b:column>
@@ -48,7 +48,7 @@
 			<h:outputLabel/>
 			<h:panelGroup>
 				<h:panelGrid columns="1">
-					<b:commandButton value="Pesquisar" action="#{relatorioNotasBean.buscar}"/>
+					<p:commandButton value="PESQUISAR" action="#{relatorioNotasBean.buscar}" ajax="false"/>
 				</h:panelGrid>
 			</h:panelGroup>
 			
