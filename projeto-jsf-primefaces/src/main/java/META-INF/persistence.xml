@@ -6,6 +6,7 @@
 		<class>model.Lancamento</class>
 		<class>model.Estados</class>
 		<class>model.Cidades</class>
+		<class>model.TelefoneUser</class>
 
 		<properties>
 			<!-- CONEXCÃO COM O BANCO DE DADOS -->

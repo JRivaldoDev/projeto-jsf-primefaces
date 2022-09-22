@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
@@ -47,7 +48,7 @@ public class LancamentoBean {
 	public String remover() {
 		daoLancamento.deletar(lancamento);
 		lancamento = new Lancamento();
-		mostrarMsg("Operação realizada com sucesso!");
+		mostrarMsg(FacesMessage.SEVERITY_INFO,"Operação realizada com sucesso!");
 		carregarLancamentos();
 		return "";
 	}
@@ -100,10 +101,8 @@ public class LancamentoBean {
 		return usuarioLogado;
 	}
 	
-	private void mostrarMsg(String msg) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		FacesMessage message = new FacesMessage(msg);
-		context.addMessage(null, message);
+	private void mostrarMsg(Severity tipo,String msg) {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(tipo, "", msg));
 	}
 	
 

@@ -20,11 +20,10 @@
 <h:body >
 	
 	<ui:include src="/menu.xhtml"/>
+	<p:growl showDetail="true" />
 	
 	<b:form id="formCadastro" style="margin-left:20%;width:60%" enctype="multipart/form-data">
 	
-		<b:messages />
-		
 		<h1 style="margin-left:26%">Cadastro de Usuário</h1>
 		
 		<b:panel>
@@ -249,10 +248,65 @@
 					<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}"/>
 					<h:graphicImage library="img" name="remover.png" style="margin-left:0.3cm"/>
 				</h:commandLink>
+			<p:commandLink title="Telefones" update=":formListaUsuarios:dialogFone" oncomplete="PF('dialogFone').show()">
+				<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}"/>
+				<h:graphicImage library="img" name="telefone.png" style="margin-left:0.3cm"/>
+			</p:commandLink>
 		</b:dataTableColumn>
 						
 		</b:dataTable>
 	</b:panel>
+	
+	<p:dialog id="dialogFone" header="Telefones" widgetVar="dialogFone"
+				position="center" modal="true" width="500px" resizable="false">
+		<b:panel>
+			<b:panelGrid columns="1">
+			
+			<b:column>
+				<h:outputLabel value="Numero:" />
+				<b:inputText value="#{pessoaBean.telefone.numero}" id="telefone" mask="(99)99999-9999"/>
+			</b:column>
+			
+			<b:column>
+				<h:outputLabel value="Tipo:"/>
+				<p:selectOneMenu id="tipoFone" value="#{pessoaBean.telefone.tipo}" style="width: 18rem;">
+					<f:selectItem itemLabel="--[Selecione]--" noSelectionOption="true"/>
+					<f:selectItem itemValue="CELULAR" itemLabel="Celular" />
+					<f:selectItem itemValue="RESIDENCIAL" itemLabel="Residencial" />
+					<f:selectItem itemValue="TRABALHO" itemLabel="Trabalho" />
+				</p:selectOneMenu>
+			</b:column>
+			
+			<h:outputLabel/>
+			
+			<b:column>
+				<p:commandButton id="salvarFone" value="SALVAR" actionListener="#{pessoaBean.salvarFone}" 
+								update="dataFones telefone tipoFone" ajax="true"/>
+			</b:column>
+			
+			</b:panelGrid>	
+		</b:panel>
+		
+		<b:panel>
+		<b:dataTable value="#{pessoaBean.pessoa.telefonesUser}" var="t" caption="Lista de Telefones" id="dataFones" 
+		paginated="false" searching="false" >
+		<b:dataTableColumn value="#{t.id}"/>
+		<b:dataTableColumn value="#{t.numero}"/>
+		<b:dataTableColumn value="#{t.tipo}"/>
+		<b:dataTableColumn label="Ação" >
+			<p:commandLink id="deletarFone" title="Excluir" actionListener="#{pessoaBean.deletarFone}" update="dataFones" ajax="true">
+				<f:param name="foneId" value="#{t.id}" />
+				<f:ajax execute="deletarFone" render="dataFones"/>
+				<h:graphicImage library="img" name="excluir-fone.png" style="margin-left:0.3cm"/>
+			</p:commandLink>
+		</b:dataTableColumn>
+											
+		</b:dataTable>
+	</b:panel>
+				
+	
+	</p:dialog>
+	
 	</h:form>
 
 

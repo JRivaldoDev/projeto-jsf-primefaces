@@ -18,7 +18,7 @@
 
 <h:body >
 	<ui:include src="/menu.xhtml"/>
-	<b:messages />
+	<p:growl showDetail="true" />
 	<h:form id="formLancamentos" style="margin-left:40%">
 	<b:panel style="width:40%">
 		<h:panelGrid columns="2">
@@ -69,11 +69,11 @@
 			<b:dataTableColumn label="Ação" >
 				<h:commandLink title="Editar">
 						<f:setPropertyActionListener value="#{l}" target="#{lancamentoBean.lancamento}" />
-						<h:graphicImage library="img" name="editar.png" style="margin-left:0.9cm"/>
+						<h:graphicImage library="img" name="editar.png" style="margin-left:0.3cm"/>
 					</h:commandLink>
 				<h:commandLink title="Excluir" action="#{lancamentoBean.remover}" >
 						<f:setPropertyActionListener value="#{l}" target="#{lancamentoBean.lancamento}"/>
-						<h:graphicImage library="img" name="excluir-documento.png" style="margin-left:0.9cm"/>
+						<h:graphicImage library="img" name="excluir-documento.png" style="margin-left:0.3cm"/>
 					</h:commandLink>
 			</b:dataTableColumn>
 							

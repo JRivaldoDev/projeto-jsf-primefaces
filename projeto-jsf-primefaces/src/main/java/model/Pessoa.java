@@ -1,10 +1,13 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
@@ -50,6 +54,9 @@ public class Pessoa implements Serializable{
 	
 	private Estados estados;
 	private Cidades cidades;
+	
+	@OneToMany(mappedBy = "usuarioPessoa", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<TelefoneUser> telefonesUser = new ArrayList<TelefoneUser>();
 	
 	@Column(columnDefinition = "text")
 	private String fotoIconBase64;
@@ -209,6 +216,12 @@ public class Pessoa implements Serializable{
 	}
 	public Double getSalario() {
 		return salario;
+	}
+	public List<TelefoneUser> getTelefonesUser() {
+		return telefonesUser;
+	}
+	public void setTelefonesUser(List<TelefoneUser> telefonesUser) {
+		this.telefonesUser = telefonesUser;
 	}
 	
 	@Override
