@@ -178,14 +178,14 @@ public class PessoaBean {
 			HttpSession session = request.getSession();
 
 			session.setAttribute("usuarioLogado", usuarioLogado);
-			return "primeira_pagina.jsf";
+			return "/principal/primeira_pagina.jsf";
 
 		}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("msg", new FacesMessage(FacesMessage.SEVERITY_WARN,"","Usuário não encontrado!"));
 		}
 
-		return "index.jsf";
+		return "/index.jsf";
 	}
 
 	public String deslogar() {
@@ -195,7 +195,7 @@ public class PessoaBean {
 		HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
 		request.getSession().invalidate();
 
-		return "index.jsf";
+		return "/index.jsf";
 	}
 
 	public boolean permitirAcesso(String perfil) {

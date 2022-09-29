@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import model.Pessoa;
 
-@WebFilter(urlPatterns = {"/*"})
+@WebFilter(urlPatterns = {"/principal/*"})
 public class FilterLogin implements Filter {
 
 	@Override
