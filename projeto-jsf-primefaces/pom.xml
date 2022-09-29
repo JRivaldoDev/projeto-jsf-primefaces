@@ -3,7 +3,7 @@
 	<groupId>projeto-jsf-primefaces</groupId>
 	<artifactId>projeto-jsf-primefaces</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>projeto-jsf-primefaces</name>
 
 	<properties>
