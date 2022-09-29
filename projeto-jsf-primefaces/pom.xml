@@ -88,13 +88,6 @@
 			<version>11.0.0</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.primefaces.themes/delta -->
-		<dependency>
-			<groupId>org.primefaces.themes</groupId>
-			<artifactId>all-themes</artifactId>
-			<version>1.0.10</version>
-		</dependency>
-
 		<dependency>
 			<groupId>com.github.adminfaces</groupId>
 			<artifactId>admin-theme</artifactId>
