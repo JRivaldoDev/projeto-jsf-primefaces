@@ -11,18 +11,18 @@
 		
 		<p:menubar>
 		
-			<p:menuitem value="Cadastros" action="primeira_pagina" icon="pi pi-fw pi-id-card"/>
-			<p:menuitem value="Lançamentos" action="lancamentos" icon="pi pi-fw pi-file"/>
-			<p:menuitem value="Gráficos" action="graficos" icon="pi pi-fw pi-chart-bar"/>
+			<p:menuitem value="Cadastros" action="primeira_pagina" icon="pi pi-fw pi-id-card" id="menuCadastros"/>
+			<p:menuitem value="Lançamentos" action="lancamentos" icon="pi pi-fw pi-file" id="menuLancamentos"/>
+			<p:menuitem value="Gráficos" action="graficos" icon="pi pi-fw pi-chart-bar" id="menuGraficos"/>
 			
-			<p:submenu label="Relatórios" icon="pi pi-fw pi-calendar">
-				<p:menuitem value="Relatório Usuário" action="relatorio_usuario" icon="pi pi-fw pi-users"/>
-				<p:menuitem value="Relatório Notas" action="relatorio_notas" icon="pi pi-fw pi-calendar-times"/>
+			<p:submenu label="Relatórios" icon="pi pi-fw pi-calendar" id="menuRelatorios">
+				<p:menuitem value="Relatório Usuário" action="relatorio_usuario" icon="pi pi-fw pi-users" id="menuRelUsuarios"/>
+				<p:menuitem value="Relatório Notas" action="relatorio_notas" icon="pi pi-fw pi-calendar-times" id="menuRelNotas"/>
 			</p:submenu>
 			
 			<p:divider layout="vertical"/>
 			
-			<p:menuitem value="Logout" action="#{pessoaBean.deslogar}" ajax="false" icon="pi pi-fw pi-power-off"/>
+			<p:menuitem value="Logout" action="#{pessoaBean.deslogar}" ajax="false" icon="pi pi-fw pi-power-off" id="menuLogout"/>
 			
 		</p:menubar>
 		

@@ -17,7 +17,7 @@
 
 <h:body >
 	<ui:include src="/principal/menu.xhtml"/>
-	<b:messages />
+	<p:growl showDetail="true" id="msgNotas"/>
 	<h:form id="relatorioNotas" style="margin-left:40%">
 	<b:panel style="width:40%">
 		<h:panelGrid columns="1">
@@ -27,28 +27,28 @@
 			
 			<b:column>
 			<h:outputLabel value="Usuario:" />
-			<b:inputText value="#{relatorioNotasBean.usuario}" />
+			<b:inputText value="#{relatorioNotasBean.usuario}" id="usuario"/>
 			</b:column>
 			
 			<b:column>
 			<h:outputLabel value="Origem:" />
-			<b:inputText value="#{relatorioNotasBean.empresaOrigem}" />
+			<b:inputText value="#{relatorioNotasBean.empresaOrigem}" id="origem"/>
 			</b:column>
 			
 			<b:column>
 			<h:outputLabel value="Destino:" />
-			<b:inputText value="#{relatorioNotasBean.empresaDestino}" />
+			<b:inputText value="#{relatorioNotasBean.empresaDestino}" id="destino"/>
 			</b:column>
 			
 			<b:column>
 			<h:outputLabel value="Data:" />
-			<b:dateTimePicker value="#{relatorioNotasBean.dataEnvio}" format="DD/MM/YYYY" />
+			<b:dateTimePicker value="#{relatorioNotasBean.dataEnvio}" format="DD/MM/YYYY" id="dataEnvio"/>
 			</b:column>
 			
 			<h:outputLabel/>
 			<h:panelGroup>
 				<h:panelGrid columns="1">
-					<p:commandButton value="PESQUISAR" action="#{relatorioNotasBean.buscar}" ajax="false"/>
+					<p:commandButton value="PESQUISAR" action="#{relatorioNotasBean.buscar}" ajax="false" id="pesquisar"/>
 				</h:panelGrid>
 			</h:panelGroup>
 			
@@ -60,7 +60,7 @@
 	
 	<h:form style="width:50%;margin-left:30%">
 		<b:panel>
-		<b:dataTable value="#{relatorioNotasBean.lancamentos}" var="l"  caption="Notas Lançadas" pdf="true" excel="true">
+		<b:dataTable value="#{relatorioNotasBean.lancamentos}" var="l"  caption="Notas Lançadas" pdf="true" excel="true" id="listaNotas">
 			
 			<b:dataTableColumn value="#{l.id}"/>
 			<b:dataTableColumn value="#{l.usuario.nome}" label="Usuario"/>

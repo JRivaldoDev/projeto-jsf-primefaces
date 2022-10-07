@@ -20,7 +20,7 @@
 <h:body >
 	
 	<ui:include src="/principal/menu.xhtml"/>
-	<p:growl showDetail="true" />
+	<p:growl showDetail="true" id="msgGrowl"/>
 	
 	<b:form id="formCadastro" style="margin-left:20%;width:60%" enctype="multipart/form-data">
 	
@@ -60,9 +60,7 @@
 			
 			<b:column>
 				<h:outputLabel value="Idade:" />
-				<b:inputText value="#{pessoaBean.pessoa.idade}" id="idade" 	converterMessage="Idade inválida!" mask="numeric" >
-					<f:convertNumber maxIntegerDigits="3" />
-				</b:inputText>
+				<b:inputText value="#{pessoaBean.pessoa.idade}" id="idade" 	mask="numeric" />
 			</b:column>
 			
 			<b:column>
@@ -141,14 +139,14 @@
 			<b:column style="padding-left: 15px;">
 			<b:panelGrid columns="1">
 			<h:outputLabel value="Programador:"/>
-				<p:selectOneMenu id="campoProgramador" value="#{pessoaBean.pessoa.nivelProgramador}" style="width: 18rem;"
+				<b:selectOneMenu id="campoProgramador" value="#{pessoaBean.pessoa.nivelProgramador}" style="width: 18rem;"
 				required="true" requiredMessage="Informe o nível de programador!">
-					<f:selectItem itemLabel="--[Selecione]--" noSelectionOption="true"/>
+					<f:selectItem itemLabel="SELECIONE" noSelectionOption="true"/>
 					<f:selectItem itemValue="JUNIOR" itemLabel="Junior" />
 					<f:selectItem itemValue="PLENO" itemLabel="Pleno" />
 					<f:selectItem itemValue="SENIOR" itemLabel="Senior" />
 					<f:selectItem itemValue="ESPECIALISTA" itemLabel="Especialista" />
-				</p:selectOneMenu>
+				</b:selectOneMenu>
 			</b:panelGrid>
 			</b:column>
 			
@@ -170,7 +168,7 @@
 				<h:outputLabel value="Estado:"/>
 				<b:selectOneMenu value="#{pessoaBean.pessoa.estados}" converter="estadosConverter" id="estados"
 				required="true" requiredMessage="Informe o estado!">
-					<f:selectItem itemLabel="--[Selecione]--" noSelectionOption="true"/>
+					<f:selectItem itemLabel="SELECIONE" noSelectionOption="true"/>
 					<f:selectItems value="#{pessoaBean.estadosCidadesBean.estados}" />
 					<f:ajax event="change" execute="@this" listener="#{pessoaBean.estadosCidadesBean.carregarCidades}" render="cidades" />
 				</b:selectOneMenu>
@@ -179,7 +177,7 @@
 				<h:outputLabel value="Cidade:"/>
 				<b:selectOneMenu value="#{pessoaBean.pessoa.cidades}" id="cidades" converter="cidadesConverter"
 				required="true" requiredMessage="Informe a cidade!">
-					<f:selectItem itemLabel="--[Selecione]--" noSelectionOption="true"/>
+					<f:selectItem itemLabel="SELECIONE" noSelectionOption="true"/>
 					<f:selectItems value="#{pessoaBean.estadosCidadesBean.cidades}" />
 				</b:selectOneMenu>
 			</b:column>
@@ -209,19 +207,19 @@
 			<h:panelGroup>
 			<h:panelGrid columns="4">
 				<h:commandButton immediate="true" image="/resources/img/novo.png" title="Novo" 
-				rendered="#{pessoaBean.permitirAcesso('ADMINISTRADOR')}">
+				rendered="#{pessoaBean.permitirAcesso('ADMINISTRADOR')}" id="novoCadastro">
 					<f:ajax event="click" execute="@this" listener="#{pessoaBean.novo}" 
 					render="formCadastro"/>
 				</h:commandButton>
 				
-				<h:commandButton immediate="true" image="/resources/img/limpar.png" title="Limpar" style="margin-left:0.2cm;">
+				<h:commandButton immediate="true" image="/resources/img/limpar.png" title="Limpar" id="limpar" style="margin-left:0.2cm;">
 					<f:ajax event="click" execute="@this" listener="#{pessoaBean.limpar}" 
 					render="formCadastro"/>
 				</h:commandButton>
 				
-				<h:commandButton action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar" style="margin-left:0.2cm;"/>
+				<h:commandButton action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar" id="salvar" style="margin-left:0.2cm;"/>
 					
-				<h:commandButton action="#{pessoaBean.deletar}" immediate="true" image="/resources/img/remover.png" title="Deletar" 
+				<h:commandButton action="#{pessoaBean.deletar}" immediate="true" image="/resources/img/remover.png" title="Deletar" id="deletar"
 				rendered="#{pessoaBean.permitirAcesso('ADMINISTRADOR')}" style="margin-left:0.2cm;"/>
 			</h:panelGrid>
 			</h:panelGroup>
@@ -240,72 +238,18 @@
 		<b:dataTableColumn value="#{p.nome}"/>
 		<b:dataTableColumn value="#{p.sobrenome}"/>
 		<b:dataTableColumn label="Ação" >
-			<h:commandLink title="Editar" immediate="true" action="#{pessoaBean.editar}" >
+			<h:commandLink title="Editar" immediate="true" action="#{pessoaBean.editar}" id="editarUsuario">
 					<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}" />
 					<h:graphicImage library="img" name="editar.png" />
 				</h:commandLink>
-			<h:commandLink title="Excluir" action="#{pessoaBean.deletar}" rendered="#{pessoaBean.permitirAcesso('ADMINISTRADOR')}">
+			<h:commandLink title="Excluir" action="#{pessoaBean.deletar}" rendered="#{pessoaBean.permitirAcesso('ADMINISTRADOR')}" id="deletarUsuario">
 					<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}"/>
 					<h:graphicImage library="img" name="remover.png" style="margin-left:0.3cm"/>
 				</h:commandLink>
-			<p:commandLink title="Telefones" update=":formListaUsuarios:dialogFone" oncomplete="PF('dialogFone').show()">
-				<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}"/>
-				<h:graphicImage library="img" name="telefone.png" style="margin-left:0.3cm"/>
-			</p:commandLink>
 		</b:dataTableColumn>
 						
 		</b:dataTable>
 	</b:panel>
-	
-	<p:dialog id="dialogFone" header="Telefones" widgetVar="dialogFone"
-				position="center" modal="true" width="500px" resizable="false">
-		<b:panel>
-			<b:panelGrid columns="1">
-			
-			<b:column>
-				<h:outputLabel value="Numero:" />
-				<b:inputText value="#{pessoaBean.telefone.numero}" id="telefone" mask="(99)99999-9999"/>
-			</b:column>
-			
-			<b:column>
-				<h:outputLabel value="Tipo:"/>
-				<p:selectOneMenu id="tipoFone" value="#{pessoaBean.telefone.tipo}" style="width: 18rem;">
-					<f:selectItem itemLabel="--[Selecione]--" noSelectionOption="true"/>
-					<f:selectItem itemValue="CELULAR" itemLabel="Celular" />
-					<f:selectItem itemValue="RESIDENCIAL" itemLabel="Residencial" />
-					<f:selectItem itemValue="TRABALHO" itemLabel="Trabalho" />
-				</p:selectOneMenu>
-			</b:column>
-			
-			<h:outputLabel/>
-			
-			<b:column>
-				<p:commandButton id="salvarFone" value="SALVAR" actionListener="#{pessoaBean.salvarFone}" 
-								update="dataFones telefone tipoFone" ajax="true"/>
-			</b:column>
-			
-			</b:panelGrid>	
-		</b:panel>
-		
-		<b:panel>
-		<b:dataTable value="#{pessoaBean.pessoa.telefonesUser}" var="t" caption="Lista de Telefones" id="dataFones" 
-		paginated="false" searching="false" >
-		<b:dataTableColumn value="#{t.id}"/>
-		<b:dataTableColumn value="#{t.numero}"/>
-		<b:dataTableColumn value="#{t.tipo}"/>
-		<b:dataTableColumn label="Ação" >
-			<p:commandLink id="deletarFone" title="Excluir" actionListener="#{pessoaBean.deletarFone}" update="dataFones" ajax="true">
-				<f:param name="foneId" value="#{t.id}" />
-				<f:ajax execute="deletarFone" render="dataFones"/>
-				<h:graphicImage library="img" name="excluir-fone.png" style="margin-left:0.3cm"/>
-			</p:commandLink>
-		</b:dataTableColumn>
-											
-		</b:dataTable>
-	</b:panel>
-				
-	
-	</p:dialog>
 	
 	</h:form>
 

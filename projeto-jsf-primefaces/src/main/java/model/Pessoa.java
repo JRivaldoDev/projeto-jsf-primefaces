@@ -55,9 +55,6 @@ public class Pessoa implements Serializable{
 	private Estados estados;
 	private Cidades cidades;
 	
-	@OneToMany(mappedBy = "usuarioPessoa", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
-	private List<TelefoneUser> telefonesUser = new ArrayList<TelefoneUser>();
-	
 	@Column(columnDefinition = "text")
 	private String fotoIconBase64;
 	private String extensao;
@@ -216,12 +213,6 @@ public class Pessoa implements Serializable{
 	}
 	public Double getSalario() {
 		return salario;
-	}
-	public List<TelefoneUser> getTelefonesUser() {
-		return telefonesUser;
-	}
-	public void setTelefonesUser(List<TelefoneUser> telefonesUser) {
-		this.telefonesUser = telefonesUser;
 	}
 	
 	@Override

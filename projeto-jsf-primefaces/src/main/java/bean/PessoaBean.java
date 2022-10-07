@@ -37,7 +37,6 @@ import com.google.gson.Gson;
 
 import dao.DaoGeneric;
 import model.Pessoa;
-import model.TelefoneUser;
 import util.EnderecoJsonUtil;
 
 @ViewScoped
@@ -50,14 +49,7 @@ public class PessoaBean {
 	private EstadosCidadesBean estadosCidadesBean = new EstadosCidadesBean();
 	private Part arquivoFoto;
 	private LineChartModel lineChartModel = new LineChartModel();
-	private TelefoneUser telefone = new TelefoneUser();
-
-	public TelefoneUser getTelefone() {
-		return telefone;
-	}
-	public void setTelefone(TelefoneUser telefone) {
-		this.telefone = telefone;
-	}
+	
 
 	public Pessoa getPessoa() {
 		return pessoa;
@@ -98,8 +90,14 @@ public class PessoaBean {
 		if(existeLogin(pessoa.getLogin())) {
 			mostrarMsg(FacesMessage.SEVERITY_WARN, "Já existe um usuário com o login: " + pessoa.getLogin());
 		}else {
-			pessoa = daoPessoa.salvarMerge(pessoa);
+			if(pessoa.getId() == null) {
+				daoPessoa.salvar(pessoa);
+			}
+			else {
+				daoPessoa.salvarMerge(pessoa);
+			}
 			mostrarMsg(FacesMessage.SEVERITY_INFO, "Operação realizada com sucesso!!!");
+			pessoa = new Pessoa();
 			carregarPessoas();
 		}
 		
@@ -141,14 +139,6 @@ public class PessoaBean {
 	}
 
 	public String deletar() {
-		if(pessoa.getTelefonesUser() != null) {
-			
-			for(int i = 0; i < pessoa.getTelefonesUser().size(); i++) {
-				this.telefone = pessoa.getTelefonesUser().get(i);
-				deletarFone();
-			}
-			
-		}
 		daoPessoa.deletar(pessoa);
 		pessoa = new Pessoa();
 		mostrarMsg(FacesMessage.SEVERITY_INFO, "Cadastro deletado com sucesso!!!");
@@ -406,29 +396,5 @@ public class PessoaBean {
 		lineChartModel.setOptions(options);
 	}
 	
-	public void salvarFone() {
-		DaoGeneric<TelefoneUser> daoFone = new DaoGeneric<TelefoneUser>();
-		telefone.setUsuarioPessoa(pessoa);;
-		telefone = daoFone.salvarMerge(telefone);
-		pessoa.getTelefonesUser().add(telefone);
-		telefone = new TelefoneUser();
-		mostrarMsg(FacesMessage.SEVERITY_INFO, "Operação realizada com sucesso!!!");
-	}
-	
-	public void deletarFone() {
-		String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("foneId");
-		DaoGeneric<TelefoneUser> daoFone = new DaoGeneric<TelefoneUser>();
-
-		if(id != null && !id.equalsIgnoreCase("null")) {
-			telefone =  daoFone.buscar(Long.parseLong(id), TelefoneUser.class);
-			daoFone.deletar(telefone);
-			pessoa.getTelefonesUser().remove(telefone);
-			mostrarMsg(FacesMessage.SEVERITY_INFO, "Operação realizada com sucesso!!!");
-		}
-		else {
-			daoFone.deletar(telefone);
-		}
-		
-	}
 		
 }

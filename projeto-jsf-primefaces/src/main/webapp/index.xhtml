@@ -17,7 +17,7 @@
 
 <h:body >
 
-	<p:growl autoUpdate="true" showDetail="true" />
+	<p:growl autoUpdate="true" showDetail="true" id="msg"/>
 
 	<b:form id="formLogin"
 		style="margin-top:10%;margin-left:40%;width:36%;">
@@ -31,18 +31,18 @@
 			<b:column>
 				<h:outputLabel value="Login" />
 				<b:inputText value="#{pessoaBean.pessoa.login}" style="width:60%"
-					required="true" requiredMessage="Informe o login!" />
+					required="true" requiredMessage="Informe o login!" id="inputLogin" />
 			</b:column>
 
 			<b:column>
 				<h:outputLabel value="Senha:" />
 				<b:inputSecret value="#{pessoaBean.pessoa.senha}" style="width:60%"
-					required="true" requiredMessage="Informe a senha!" />
+					required="true" requiredMessage="Informe a senha!" id="inputSenha"/>
 			</b:column>
 
 			<b:column>
 				<p:commandButton value="ACESSAR" action="#{pessoaBean.logar}"
-					style="width:40%" ajax="false" />
+					style="width:40%" ajax="false" id="btnAcessar" />
 			</b:column>
 
 		</b:panelGrid>
