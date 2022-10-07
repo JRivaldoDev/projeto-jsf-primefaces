@@ -23,7 +23,6 @@ import javax.validation.constraints.Size;
 @Entity
 public class Pessoa implements Serializable{
 	
-	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -230,7 +229,5 @@ public class Pessoa implements Serializable{
 		Pessoa other = (Pessoa) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
 	
 }
