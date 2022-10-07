@@ -1,30 +1,37 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html  xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" 
 	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-	<h:form >
-		
-		<p:menubar>
-		
-			<p:menuitem value="Cadastros" action="primeira_pagina" icon="pi pi-fw pi-id-card" id="menuCadastros"/>
-			<p:menuitem value="Lançamentos" action="lancamentos" icon="pi pi-fw pi-file" id="menuLancamentos"/>
-			<p:menuitem value="Gráficos" action="graficos" icon="pi pi-fw pi-chart-bar" id="menuGraficos"/>
-			
-			<p:submenu label="Relatórios" icon="pi pi-fw pi-calendar" id="menuRelatorios">
-				<p:menuitem value="Relatório Usuário" action="relatorio_usuario" icon="pi pi-fw pi-users" id="menuRelUsuarios"/>
-				<p:menuitem value="Relatório Notas" action="relatorio_notas" icon="pi pi-fw pi-calendar-times" id="menuRelNotas"/>
-			</p:submenu>
-			
-			<p:divider layout="vertical"/>
-			
-			<p:menuitem value="Logout" action="#{pessoaBean.deslogar}" ajax="false" icon="pi pi-fw pi-power-off" id="menuLogout"/>
-			
-		</p:menubar>
-		
-	</h:form>
+<h:form>
+
+	<p:menubar>
+
+		<p:menuitem value="Cadastros" action="primeira_pagina"
+			icon="pi pi-fw pi-id-card" id="menuCadastros" />
+		<p:menuitem value="Lançamentos" action="lancamentos"
+			icon="pi pi-fw pi-file" id="menuLancamentos" />
+		<p:menuitem value="Gráficos" action="graficos"
+			icon="pi pi-fw pi-chart-bar" id="menuGraficos" />
+
+		<p:submenu label="Relatórios" icon="pi pi-fw pi-calendar"
+			id="menuRelatorios">
+			<p:menuitem value="Relatório Usuário" action="relatorio_usuario"
+				icon="pi pi-fw pi-users" id="menuRelUsuarios" />
+			<p:menuitem value="Relatório Notas" action="relatorio_notas"
+				icon="pi pi-fw pi-calendar-times" id="menuRelNotas" />
+		</p:submenu>
+
+		<p:divider layout="vertical" />
+
+		<p:menuitem value="Logout" action="#{pessoaBean.deslogar}"
+			ajax="false" icon="pi pi-fw pi-power-off" id="menuLogout" />
+
+	</p:menubar>
+
+</h:form>
 </html>

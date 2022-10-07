@@ -50,7 +50,6 @@ public class PessoaBean {
 	private Part arquivoFoto;
 	private LineChartModel lineChartModel = new LineChartModel();
 	
-
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
@@ -88,7 +87,7 @@ public class PessoaBean {
 
 	public String salvar() {
 		if(existeLogin(pessoa.getLogin())) {
-			mostrarMsg(FacesMessage.SEVERITY_WARN, "Já existe um usuário com o login: " + pessoa.getLogin());
+			mostrarMsg(FacesMessage.SEVERITY_WARN, "Já existe um usuário com o login informado!");
 		}else {
 			if(pessoa.getId() == null) {
 				daoPessoa.salvar(pessoa);
@@ -357,9 +356,7 @@ public class PessoaBean {
 				salEspecialista += pessoa.getSalario();
 				qntE++;
 			}
-						
 		}
-		
 		
 		if(qntJ > 0) {
 			labels.add("Junior");
@@ -396,5 +393,4 @@ public class PessoaBean {
 		lineChartModel.setOptions(options);
 	}
 	
-		
 }

@@ -1,78 +1,82 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html  xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" 
 	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
 
 	<title>Relatório de Notas</title>
-	
-	<h:outputStylesheet name="css/estilo.css" position="last"/>
-	
+
+	<h:outputStylesheet name="css/estilo.css" position="last" />
+
 </h:head>
 
-<h:body >
-	<ui:include src="/principal/menu.xhtml"/>
-	<p:growl showDetail="true" id="msgNotas"/>
+<h:body>
+	<ui:include src="/principal/menu.xhtml" />
+	<p:growl showDetail="true" id="msgNotas" />
 	<h:form id="relatorioNotas" style="margin-left:40%">
-	<b:panel style="width:40%">
-		<h:panelGrid columns="1">
-			<f:facet name="header">
-				<h4>Consultar Notas Lançadas</h4>
-			</f:facet>
-			
-			<b:column>
-			<h:outputLabel value="Usuario:" />
-			<b:inputText value="#{relatorioNotasBean.usuario}" id="usuario"/>
-			</b:column>
-			
-			<b:column>
-			<h:outputLabel value="Origem:" />
-			<b:inputText value="#{relatorioNotasBean.empresaOrigem}" id="origem"/>
-			</b:column>
-			
-			<b:column>
-			<h:outputLabel value="Destino:" />
-			<b:inputText value="#{relatorioNotasBean.empresaDestino}" id="destino"/>
-			</b:column>
-			
-			<b:column>
-			<h:outputLabel value="Data:" />
-			<b:dateTimePicker value="#{relatorioNotasBean.dataEnvio}" format="DD/MM/YYYY" id="dataEnvio"/>
-			</b:column>
-			
-			<h:outputLabel/>
-			<h:panelGroup>
-				<h:panelGrid columns="1">
-					<p:commandButton value="PESQUISAR" action="#{relatorioNotasBean.buscar}" ajax="false" id="pesquisar"/>
-				</h:panelGrid>
-			</h:panelGroup>
-			
-		</h:panelGrid>
-		</b:panel>
-	</h:form>
-	
-		<br />
-	
-	<h:form style="width:50%;margin-left:30%">
-		<b:panel>
-		<b:dataTable value="#{relatorioNotasBean.lancamentos}" var="l"  caption="Notas Lançadas" pdf="true" excel="true" id="listaNotas">
-			
-			<b:dataTableColumn value="#{l.id}"/>
-			<b:dataTableColumn value="#{l.usuario.nome}" label="Usuario"/>
-			<b:dataTableColumn value="#{l.numeroNotaFiscal}" label="Número" />
-			<b:dataTableColumn value="#{l.empresaOrigem}" label="Origem" />
-			<b:dataTableColumn value="#{l.empresaDestino}" label="Destino"/>
-			<b:dataTableColumn value="#{l.dataEnvio}" label="Data"/>
-			
-		</b:dataTable>
+		<b:panel style="width:40%">
+			<h:panelGrid columns="1">
+				<f:facet name="header">
+					<h4>Consultar Notas Lançadas</h4>
+				</f:facet>
+
+				<b:column>
+					<h:outputLabel value="Usuario:" />
+					<b:inputText value="#{relatorioNotasBean.usuario}" id="usuario" />
+				</b:column>
+
+				<b:column>
+					<h:outputLabel value="Origem:" />
+					<b:inputText value="#{relatorioNotasBean.empresaOrigem}"
+						id="origem" />
+				</b:column>
+
+				<b:column>
+					<h:outputLabel value="Destino:" />
+					<b:inputText value="#{relatorioNotasBean.empresaDestino}"
+						id="destino" />
+				</b:column>
+
+				<b:column>
+					<h:outputLabel value="Data:" />
+					<b:dateTimePicker value="#{relatorioNotasBean.dataEnvio}"
+						format="DD/MM/YYYY" id="dataEnvio" />
+				</b:column>
+
+				<h:outputLabel />
+				<h:panelGroup>
+					<h:panelGrid columns="1">
+						<p:commandButton value="PESQUISAR"
+							action="#{relatorioNotasBean.buscar}" ajax="false" id="pesquisar" />
+					</h:panelGrid>
+				</h:panelGroup>
+
+			</h:panelGrid>
 		</b:panel>
 	</h:form>
 
+	<br />
+
+	<h:form style="width:50%;margin-left:30%">
+		<b:panel>
+			<b:dataTable value="#{relatorioNotasBean.lancamentos}" var="l"
+				caption="Notas Lançadas" pdf="true" excel="true" id="listaNotas">
+
+				<b:dataTableColumn value="#{l.id}" />
+				<b:dataTableColumn value="#{l.usuario.nome}" label="Usuario" />
+				<b:dataTableColumn value="#{l.numeroNotaFiscal}" label="Número" />
+				<b:dataTableColumn value="#{l.empresaOrigem}" label="Origem" />
+				<b:dataTableColumn value="#{l.empresaDestino}" label="Destino" />
+				<b:dataTableColumn value="#{l.dataEnvio}" label="Data" />
+
+			</b:dataTable>
+		</b:panel>
+	</h:form>
 
 </h:body>
 

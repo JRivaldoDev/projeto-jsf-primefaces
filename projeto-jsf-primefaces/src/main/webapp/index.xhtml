@@ -4,20 +4,20 @@
 <html xmlns:b="http://bootsfaces.net/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 
 	<title>Login</title>
-	
-	<h:outputStylesheet name="css/estilo.css" position="last"/>
-	
+
+	<h:outputStylesheet name="css/estilo.css" position="last" />
+
 </h:head>
 
-<h:body >
+<h:body>
 
-	<p:growl autoUpdate="true" showDetail="true" id="msg"/>
+	<p:growl autoUpdate="true" showDetail="true" id="msg" />
 
 	<b:form id="formLogin"
 		style="margin-top:10%;margin-left:40%;width:36%;">
@@ -37,7 +37,7 @@
 			<b:column>
 				<h:outputLabel value="Senha:" />
 				<b:inputSecret value="#{pessoaBean.pessoa.senha}" style="width:60%"
-					required="true" requiredMessage="Informe a senha!" id="inputSenha"/>
+					required="true" requiredMessage="Informe a senha!" id="inputSenha" />
 			</b:column>
 
 			<b:column>
@@ -47,7 +47,6 @@
 
 		</b:panelGrid>
 	</b:form>
-
 
 </h:body>
 

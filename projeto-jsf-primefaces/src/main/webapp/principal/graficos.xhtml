@@ -1,43 +1,45 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html  xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
+<html xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" 
 	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
 
 	<title>Gráficos</title>
-	
-	<h:outputStylesheet name="css/estilo.css" position="last"/>
-	
+
+	<h:outputStylesheet name="css/estilo.css" position="last" />
+
 </h:head>
 
-<h:body >
-	<ui:include src="/principal/menu.xhtml"/>
+<h:body>
+	<ui:include src="/principal/menu.xhtml" />
 	<p:growl showDetail="true" id="msgGraficos" />
 	<h:form id="graficos" style="margin-left:40%">
-	<b:panel style="width:40%">
+		<b:panel style="width:40%">
 			<h4>Graficos</h4>
-						
-			<h:outputLabel/>
-			
+
+			<h:outputLabel />
+
 			<h:panelGrid columns="1">
-				<p:commandButton value="GERAR" action="#{pessoaBean.gerarGraficoSalario}" ajax="false" id="gerarGrafico"/>
+				<p:commandButton value="GERAR"
+					action="#{pessoaBean.gerarGraficoSalario}" ajax="false"
+					id="gerarGrafico" />
 			</h:panelGrid>
-			
+
 		</b:panel>
 	</h:form>
-	
-		<br />
-	
-	<h:form style="width:50%;margin-left:30%" id="formGrafico">
-		 <p:lineChart model="#{pessoaBean.lineChartModel}" style="width: 100%; height: 300px;"/>
-		 
-	</h:form>
 
+	<br />
+
+	<h:form style="width:50%;margin-left:30%" id="formGrafico">
+		<p:lineChart model="#{pessoaBean.lineChartModel}"
+			style="width: 100%; height: 300px;" />
+
+	</h:form>
 
 </h:body>
 
