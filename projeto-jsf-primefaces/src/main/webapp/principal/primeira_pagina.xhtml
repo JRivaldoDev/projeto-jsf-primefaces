@@ -250,10 +250,13 @@
 						image="/resources/img/salvar.png" title="Salvar" id="salvar"
 						style="margin-left:0.2cm;" />
 
-					<h:commandButton action="#{pessoaBean.deletar}" immediate="true"
-						image="/resources/img/remover.png" title="Deletar" id="deletar"
+					<h:commandButton immediate="true" 
+						image="/resources/img/remover.png"  title="Deletar" id="deletar"
 						rendered="#{pessoaBean.permitirAcesso('ADMINISTRADOR')}"
-						style="margin-left:0.2cm;" />
+						style="margin-left:0.2cm;" >
+						<f:ajax event="click" execute="@this" 
+						listener="#{pessoaBean.deletar}" render="formCadastro formListaUsuarios"/>
+						</h:commandButton>
 				</h:panelGrid>
 			</h:panelGroup>
 
@@ -267,7 +270,7 @@
 
 		<b:panel>
 			<b:dataTable value="#{pessoaBean.pessoas}" var="p"
-				caption="Lista de Usuários Cadastrados">
+				caption="Lista de Usuários Cadastrados" id="dataTableUsuario">
 				<b:dataTableColumn value="#{p.id}" />
 				<b:dataTableColumn value="#{p.nome}" />
 				<b:dataTableColumn value="#{p.sobrenome}" />

@@ -137,13 +137,10 @@ public class PessoaBean {
 		pessoa = nova;
 	}
 
-	public String deletar() {
+	public void deletar() {
 		daoPessoa.deletar(pessoa);
-		pessoa = new Pessoa();
+		novo();
 		mostrarMsg(FacesMessage.SEVERITY_INFO, "Cadastro deletado com sucesso!!!");
-		limpar();
-		carregarPessoas();
-		return "";
 	}
 
 	@PostConstruct
