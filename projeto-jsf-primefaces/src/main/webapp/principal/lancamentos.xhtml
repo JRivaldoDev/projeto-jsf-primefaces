@@ -49,12 +49,7 @@
 				<h:outputLabel />
 				<h:panelGroup>
 					<h:outputLabel />
-					<h:panelGrid columns="4">
-						<h:commandButton immediate="true" image="/resources/img/novo-arquivo.png"
-							 title="Novo" id="novaNota" >
-							<f:ajax event="click" execute="@this" 
-							listener="#{lancamentoBean.novo}" render="formLancamentos" />
-						</h:commandButton>
+					<h:panelGrid columns="2">
 						<h:commandButton image="/resources/img/limpar.png" immediate="true" title="Limpar"
 							style="margin-left:0.2cm;" id="limparNota" >
 							<f:ajax event="click" execute="@this" 

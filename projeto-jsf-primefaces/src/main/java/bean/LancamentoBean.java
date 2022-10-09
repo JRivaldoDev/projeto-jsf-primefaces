@@ -54,13 +54,8 @@ public class LancamentoBean {
 		carregarLancamentos();
 	}
 	
-	public void novo() {
-		lancamento = new Lancamento();
-	}
-	
 	public void limpar() {
 		Lancamento novo = new Lancamento();
-		novo.setId(lancamento.getId());
 		novo.setUsuario(lancamento.getUsuario());
 		lancamento = novo;
 	}
