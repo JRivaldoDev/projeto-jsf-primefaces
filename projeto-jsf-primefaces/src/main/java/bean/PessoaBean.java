@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,8 @@ import org.primefaces.model.charts.optionconfig.title.Title;
 import com.google.gson.Gson;
 
 import dao.DaoGeneric;
+import model.Cidades;
+import model.Lancamento;
 import model.Pessoa;
 import util.EnderecoJsonUtil;
 
@@ -83,6 +86,31 @@ public class PessoaBean {
 	}
 	public void setLineChartModel(LineChartModel lineChartModel) {
 		this.lineChartModel = lineChartModel;
+	}
+	
+	private void criarContaAdmin() {
+		try {
+			
+		if(!existeLogin("admin")) {
+			Pessoa administrador = new Pessoa();
+			administrador.setNome("ADMINISTRADOR");
+			administrador.setSobrenome("DO SISTEMA");
+			SimpleDateFormat simpleDateFormat =  new SimpleDateFormat("dd/MM/yyyy");
+			administrador.setDataNascimento(simpleDateFormat.parse("01/01/2000"));
+			administrador.setEstados(estadosCidadesBean.buscarEstado("15"));
+			administrador.setCidades(new DaoGeneric<Cidades>().buscar(4622L, Cidades.class));
+			administrador.setPerfil("ADMINISTRADOR");
+			administrador.setNivelProgramador("SENIOR");
+			administrador.setSalario(6300.00);
+			administrador.setLogin("admin");
+			administrador.setSenha("admin");
+			
+			daoPessoa.salvar(administrador);
+			
+		}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String salvar() {
@@ -138,17 +166,21 @@ public class PessoaBean {
 	}
 
 	public void deletar() {
+		deletarNotas();
 		daoPessoa.deletar(pessoa);
 		novo();
 		mostrarMsg(FacesMessage.SEVERITY_INFO, "Cadastro deletado com sucesso!!!");
 	}
 
+	@SuppressWarnings("unchecked")
 	@PostConstruct
 	public void carregarPessoas() {
-		pessoas = daoPessoa.listar(Pessoa.class);
+		pessoas = daoPessoa.getEntityManager().createQuery("from Pessoa order by id desc").getResultList();
 	}
 
 	public String logar() {
+		
+		criarContaAdmin();
 		
 		try {
 			
@@ -390,4 +422,18 @@ public class PessoaBean {
 		lineChartModel.setOptions(options);
 	}
 	
+	private void deletarNotas() {
+		DaoGeneric<Lancamento> daoLancamento = new DaoGeneric<Lancamento>();
+		
+		@SuppressWarnings("unchecked")
+		List<Lancamento> lancamentos = daoLancamento.getEntityManager()
+				.createQuery("from Lancamento where usuario= :usuario")
+				.setParameter("usuario", pessoa).getResultList();
+		
+		if(lancamentos != null) {
+			for (Lancamento lancamento : lancamentos) {
+				daoLancamento.deletar(lancamento);
+			}
+		}
+	}
 }
