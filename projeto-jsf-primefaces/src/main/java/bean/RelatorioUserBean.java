@@ -113,7 +113,11 @@ public class RelatorioUserBean implements Serializable{
 				pessoas = daoPessoa.getEntityManager().createQuery(sql.toString() + " order by p.nome asc").getResultList();
 			}
 			
-									
+			nome = "";
+			nivelProgramador = "";
+			estado = "";
+			dataNascimento = null;
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
