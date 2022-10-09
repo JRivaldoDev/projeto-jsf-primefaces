@@ -25,7 +25,7 @@ public class LancamentoBean {
 	private List<Lancamento> lancamentos = new ArrayList<Lancamento>();
 	
 	public List<Lancamento> getLancamentos() {
-		carregarLancamentosLimit();
+		carregarLancamentos();
 		return lancamentos;
 	}
 	public void setLancamentos(List<Lancamento> lancamentos) {
@@ -41,34 +41,35 @@ public class LancamentoBean {
 	public String salvar() {
 		lancamento.setUsuario(usuarioLogado());
 		daoLancamento.salvarMerge(lancamento);
-		carregarLancamentos();
-		return "";
-	}
-	
-	public String remover() {
-		daoLancamento.deletar(lancamento);
 		lancamento = new Lancamento();
 		mostrarMsg(FacesMessage.SEVERITY_INFO,"Operação realizada com sucesso!");
 		carregarLancamentos();
 		return "";
 	}
 	
-	public String editar() {
-		salvar();
+	public void remover() {
+		daoLancamento.deletar(lancamento);
+		lancamento = new Lancamento();
+		mostrarMsg(FacesMessage.SEVERITY_INFO,"Operação realizada com sucesso!");
 		carregarLancamentos();
-		return "";
 	}
 	
-	public String novo() {
+	public void novo() {
 		lancamento = new Lancamento();
-		return "";
+	}
+	
+	public void limpar() {
+		Lancamento novo = new Lancamento();
+		novo.setId(lancamento.getId());
+		novo.setUsuario(lancamento.getUsuario());
+		lancamento = novo;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void carregarLancamentos() {
 		
 		lancamentos = daoLancamento.getEntityManager().createQuery
-				("from Lancamento where usuario= :usuario order by id")
+				("from Lancamento where usuario= :usuario order by id desc")
 				.setParameter("usuario", usuarioLogado())
 				.getResultList();
 		if(lancamentos == null) {

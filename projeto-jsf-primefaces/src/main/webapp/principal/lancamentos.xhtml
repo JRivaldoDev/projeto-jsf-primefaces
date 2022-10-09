@@ -50,17 +50,19 @@
 				<h:panelGroup>
 					<h:outputLabel />
 					<h:panelGrid columns="4">
-						<h:commandButton action="#{lancamentoBean.novo}"
-							image="/resources/img/novo-arquivo.png" title="Novo"
-							id="novaNota" />
-						<h:commandButton image="/resources/img/limpar.png" title="Limpar"
-							type="reset" style="margin-left:0.2cm;" id="limparNota" />
+						<h:commandButton immediate="true" image="/resources/img/novo-arquivo.png"
+							 title="Novo" id="novaNota" >
+							<f:ajax event="click" execute="@this" 
+							listener="#{lancamentoBean.novo}" render="formLancamentos" />
+						</h:commandButton>
+						<h:commandButton image="/resources/img/limpar.png" immediate="true" title="Limpar"
+							style="margin-left:0.2cm;" id="limparNota" >
+							<f:ajax event="click" execute="@this" 
+							listener="#{lancamentoBean.limpar}" render="formLancamentos" />
+						</h:commandButton>
 						<h:commandButton action="#{lancamentoBean.salvar}"
 							image="/resources/img/salvar.png" title="Salvar"
 							style="margin-left:0.2cm;" id="salvarNota" />
-						<h:commandButton action="#{lancamentoBean.remover}"
-							image="/resources/img/excluir-documento.png" title="Deletar"
-							style="margin-left:0.2cm;" id="removerNota" />
 					</h:panelGrid>
 				</h:panelGroup>
 
@@ -70,7 +72,7 @@
 
 	<br />
 
-	<h:form style="width:50%;margin-left:30%">
+	<h:form style="width:50%;margin-left:30%" id="formListaNotas">
 		<b:panel>
 			<b:dataTable value="#{lancamentoBean.lancamentos}" var="l"
 				caption="Lista de Notas Lançadas" id="listaNotas">
@@ -80,12 +82,6 @@
 				<b:dataTableColumn value="#{l.empresaDestino}" label="Destino" />
 				<b:dataTableColumn value="#{l.dataEnvio}" label="Data" />
 				<b:dataTableColumn label="Ação">
-					<h:commandLink title="Editar" id="editarNota">
-						<f:setPropertyActionListener value="#{l}"
-							target="#{lancamentoBean.lancamento}" />
-						<h:graphicImage library="img" name="editar.png"
-							style="margin-left:0.3cm" />
-					</h:commandLink>
 					<h:commandLink title="Excluir" action="#{lancamentoBean.remover}"
 						id="excluirNota">
 						<f:setPropertyActionListener value="#{l}"
