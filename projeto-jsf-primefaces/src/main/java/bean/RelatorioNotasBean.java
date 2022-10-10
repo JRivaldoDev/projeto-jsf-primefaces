@@ -56,7 +56,6 @@ public class RelatorioNotasBean implements Serializable{
 		return dataEnvio;
 	}
 	
-	
 	@SuppressWarnings("unchecked")
 	public String buscar() {
 		
@@ -71,24 +70,24 @@ public class RelatorioNotasBean implements Serializable{
 			}
 			
 			if(!usuario.isEmpty()) {
-				sql.append("l.usuario.nome= '" + usuario +"' ");
+				sql.append("upper(l.usuario.nome) like '%" + usuario.toUpperCase() +"%' ");
 				contem = true;
 			}
 			
 			if(!empresaOrigem.isEmpty() && !contem) {
-				sql.append("l.empresaOrigem= '" + empresaOrigem +"' ");
+				sql.append("upper(l.empresaOrigem) like '%" + empresaOrigem.toUpperCase() +"%' ");
 				contem = true;
 			}
 			else if(!empresaOrigem.isEmpty()){
-				sql.append("and l.empresaOrigem= '" + empresaOrigem +"' ");
+				sql.append("and upper(l.empresaOrigem) like '%" + empresaOrigem.toUpperCase() +"%' ");
 			}
 			
 			if(!empresaDestino.isEmpty() && !contem) {
-				sql.append("l.empresaDestino= '" + empresaDestino +"' ");
+				sql.append("upper(l.empresaDestino) like '%" + empresaDestino.toUpperCase() +"%' ");
 				contem = true;
 			}
 			else if(!empresaDestino.isEmpty()){
-				sql.append("and l.empresaDestino= '" + empresaDestino +"' ");
+				sql.append("and upper(l.empresaDestino) like '%" + empresaDestino.toUpperCase() +"%' ");
 			}
 			
 			if(dataEnvio != null && !contem) {
@@ -99,15 +98,17 @@ public class RelatorioNotasBean implements Serializable{
 			}
 			
 			lancamentos = daoLancamento.getEntityManager().createQuery(sql.toString() + " order by l.id desc").getResultList();
-									
+			
+			usuario = "";
+			empresaOrigem = "";
+			empresaDestino = "";
+			dataEnvio = null;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		
 		return "";
 	}
-	
 
 }

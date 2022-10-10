@@ -87,8 +87,11 @@ public class PessoaBean {
 	public void setLineChartModel(LineChartModel lineChartModel) {
 		this.lineChartModel = lineChartModel;
 	}
-	
-	private void criarContaAdmin() {
+	/** 
+	método criado para facilitar para quem quiser usar o sistema
+	e poder fazer os testes com o projeto de testes automatizado
+	*/
+	private void criarContaAdminParaTestes() {
 		try {
 			
 		if(!existeLogin("admin")) {
@@ -105,8 +108,16 @@ public class PessoaBean {
 			administrador.setLogin("admin");
 			administrador.setSenha("admin");
 			
-			daoPessoa.salvar(administrador);
+			Lancamento lancamento = new Lancamento();
+			lancamento.setNumeroNotaFiscal("11111111111");
+			lancamento.setEmpresaOrigem("Empresa A");
+			lancamento.setEmpresaDestino("Empresa B");
+			lancamento.setDataEnvio(simpleDateFormat.parse("01/01/2022"));
 			
+			lancamento.setUsuario(daoPessoa.salvarMerge(administrador));
+			
+			DaoGeneric<Lancamento> daoLancamento = new DaoGeneric<Lancamento>();
+			daoLancamento.salvar(lancamento);
 		}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -180,7 +191,7 @@ public class PessoaBean {
 
 	public String logar() {
 		
-		criarContaAdmin();
+		criarContaAdminParaTestes();
 		
 		try {
 			
